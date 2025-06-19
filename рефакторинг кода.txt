@@ -1,0 +1,235 @@
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using YG;
+
+public class ClickerGame : MonoBehaviour
+{
+    [Header("UI Elements")]
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI levelText;
+    public TextMeshProUGUI clickUpgradeText;
+    public TextMeshProUGUI autoClickUpgradeText;
+    public Image xpBar;
+    
+    [Header("Buttons")]
+    public Button clickButton;
+    public Button clickUpgradeButton;
+    public Button autoClickUpgradeButton;
+    public Button doubleCoinsButton;
+    public Button adButton;
+    
+    [Header("Visual Assets")]
+    public Sprite[] clickButtonSprites;
+    
+    [Header("Game Config")]
+    [SerializeField] private float doubleCoinsDuration = 30f;
+    [SerializeField] private int initialXpToNextLevel = 100;
+    [SerializeField] private float levelXpMultiplier = 1.5f;
+    [SerializeField] private int initialClickUpgradeCost = 100;
+    [SerializeField] private int initialAutoClickUpgradeCost = 150;
+
+    // Player stats
+    private int score = 0;
+    private int level = 1;
+    private int xp = 0;
+    private int xpToNextLevel;
+    private int clickPower = 1;
+    private int autoClickPower = 0;
+    private int clickUpgradeCost;
+    private int autoClickUpgradeCost;
+    
+    // Boost states
+    private bool doubleCoinsActive = false;
+
+    // Constants
+    private const string SCORE_KEY = "Score";
+    private const string LEVEL_KEY = "Level";
+    private const string XP_KEY = "Xp";
+    private const string XP_TO_NEXT_LEVEL_KEY = "XpToNextLevel";
+    private const string CLICK_POWER_KEY = "ClickPower";
+    private const string AUTO_CLICK_POWER_KEY = "AutoClickPower";
+    private const string CLICK_UPGRADE_COST_KEY = "ClickUpgradeCost";
+    private const string AUTO_CLICK_UPGRADE_COST_KEY = "AutoClickUpgradeCost";
+    private const int DOUBLE_COINS_AD_ID = 1;
+
+    void Start()
+    {
+        InitializeGameValues();
+        SetupButtonListeners();
+        LoadProgress();
+        UpdateUI();
+        InvokeRepeating(nameof(AutoClick), 1f, 1f);
+    }
+
+    void OnEnable()
+    {
+        YandexGame.RewardVideoEvent += Rewarded;
+    }
+
+    void OnDisable()
+    {
+        YandexGame.RewardVideoEvent -= Rewarded;
+        SaveProgress();
+    }
+
+    private void InitializeGameValues()
+    {
+        xpToNextLevel = initialXpToNextLevel;
+        clickUpgradeCost = initialClickUpgradeCost;
+        autoClickUpgradeCost = initialAutoClickUpgradeCost;
+    }
+
+    private void SetupButtonListeners()
+    {
+        clickButton.onClick.AddListener(OnClick);
+        clickUpgradeButton.onClick.AddListener(BuyClickUpgrade);
+        autoClickUpgradeButton.onClick.AddListener(BuyAutoClickUpgrade);
+        doubleCoinsButton.onClick.AddListener(ActivateDoubleCoins);
+        adButton.onClick.AddListener(ShowAdForDoubleCoins);
+    }
+
+    void OnClick()
+    {
+        int coinsToAdd = CalculateCoins(clickPower);
+        score += coinsToAdd;
+        xp += clickPower;
+
+        CheckForLevelUp();
+        UpdateUI();
+        SaveProgress();
+    }
+
+    void AutoClick()
+    {
+        if (autoClickPower <= 0) return;
+        
+        score += CalculateCoins(autoClickPower);
+        UpdateUI();
+        SaveProgress();
+    }
+
+    private int CalculateCoins(int basePower)
+    {
+        return basePower * (doubleCoinsActive ? 2 : 1);
+    }
+
+    private void CheckForLevelUp()
+    {
+        if (xp >= xpToNextLevel)
+        {
+            LevelUp();
+        }
+    }
+
+    void LevelUp()
+    {
+        level++;
+        xp = 0;
+        xpToNextLevel = Mathf.RoundToInt(xpToNextLevel * levelXpMultiplier);
+        UpdateButtonSprite();
+    }
+
+    private void UpdateButtonSprite()
+    {
+        int spriteIndex = level - 1;
+        if (spriteIndex < clickButtonSprites.Length)
+        {
+            clickButton.image.sprite = clickButtonSprites[spriteIndex];
+        }
+    }
+
+    void BuyClickUpgrade()
+    {
+        if (TryPurchase(clickUpgradeCost))
+        {
+            clickPower++;
+            clickUpgradeCost *= 2;
+        }
+    }
+
+    void BuyAutoClickUpgrade()
+    {
+        if (TryPurchase(autoClickUpgradeCost))
+        {
+            autoClickPower++;
+            autoClickUpgradeCost *= 2;
+        }
+    }
+
+    private bool TryPurchase(int cost)
+    {
+        if (score < cost) return false;
+        
+        score -= cost;
+        UpdateUI();
+        SaveProgress();
+        return true;
+    }
+
+    void UpdateUI()
+    {
+        scoreText.text = score.ToString();
+        levelText.text = "Уровень: " + level;
+        xpBar.fillAmount = (float)xp / xpToNextLevel;
+        clickUpgradeText.text = $"+1 клик\n{clickUpgradeCost} фуррикоин";
+        autoClickUpgradeText.text = $"+1 автоклик\n{autoClickUpgradeCost} гулей";
+    }
+
+    void SaveProgress()
+    {
+        PlayerPrefs.SetInt(SCORE_KEY, score);
+        PlayerPrefs.SetInt(LEVEL_KEY, level);
+        PlayerPrefs.SetInt(XP_KEY, xp);
+        PlayerPrefs.SetInt(XP_TO_NEXT_LEVEL_KEY, xpToNextLevel);
+        PlayerPrefs.SetInt(CLICK_POWER_KEY, clickPower);
+        PlayerPrefs.SetInt(AUTO_CLICK_POWER_KEY, autoClickPower);
+        PlayerPrefs.SetInt(CLICK_UPGRADE_COST_KEY, clickUpgradeCost);
+        PlayerPrefs.SetInt(AUTO_CLICK_UPGRADE_COST_KEY, autoClickUpgradeCost);
+        PlayerPrefs.Save();
+    }
+
+    void LoadProgress()
+    {
+        if (!PlayerPrefs.HasKey(SCORE_KEY)) return;
+        
+        score = PlayerPrefs.GetInt(SCORE_KEY);
+        level = PlayerPrefs.GetInt(LEVEL_KEY);
+        xp = PlayerPrefs.GetInt(XP_KEY);
+        xpToNextLevel = PlayerPrefs.GetInt(XP_TO_NEXT_LEVEL_KEY);
+        clickPower = PlayerPrefs.GetInt(CLICK_POWER_KEY);
+        autoClickPower = PlayerPrefs.GetInt(AUTO_CLICK_POWER_KEY);
+        clickUpgradeCost = PlayerPrefs.GetInt(CLICK_UPGRADE_COST_KEY);
+        autoClickUpgradeCost = PlayerPrefs.GetInt(AUTO_CLICK_UPGRADE_COST_KEY);
+        
+        UpdateButtonSprite();
+    }
+
+    public void ActivateDoubleCoins()
+    {
+        if (doubleCoinsActive) return;
+        
+        doubleCoinsActive = true;
+        doubleCoinsButton.interactable = false;
+        Invoke(nameof(DisableDoubleCoins), doubleCoinsDuration);
+    }
+
+    private void DisableDoubleCoins()
+    {
+        doubleCoinsActive = false;
+        doubleCoinsButton.interactable = true;
+    }
+
+    public void ShowAdForDoubleCoins()
+    {
+        YandexGame.RewVideoShow(DOUBLE_COINS_AD_ID);
+    }
+
+    private void Rewarded(int id)
+    {
+        if (id == DOUBLE_COINS_AD_ID)
+        {
+            ActivateDoubleCoins();
+        }
+    }
+}
