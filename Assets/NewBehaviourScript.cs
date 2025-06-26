@@ -118,8 +118,8 @@ public class ClickerGame : MonoBehaviour
         scoreText.text = "" + score;
         levelText.text = "Уровень: " + level;
         xpBar.fillAmount = (float)xp / xpToNextLevel;
-        clickUpgradeText.text = $"+1 клик\n{clickUpgradeCost} Бабанкоин";
-        autoClickUpgradeText.text = $"+1 автоклик\n{autoClickUpgradeCost} Бабанкоин";
+        clickUpgradeText.text = $"+1 клик\n{clickUpgradeCost} Автокредитов";
+        autoClickUpgradeText.text = $"+1 автоклик\n{autoClickUpgradeCost} Автокредитов";
         // Установка спрайта только по currentSpriteIndex
     }
 
