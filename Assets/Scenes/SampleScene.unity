@@ -696,7 +696,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1155, y: -96}
+  m_AnchoredPosition: {x: -1837, y: -547}
   m_SizeDelta: {x: 246, y: 101.43}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &291945679
@@ -903,8 +903,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -301.73004, y: 0}
-  m_SizeDelta: {x: 1224, y: 816}
+  m_AnchoredPosition: {x: -301.73004, y: -1.065}
+  m_SizeDelta: {x: 1224, y: 818.13}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &457011304
 MonoBehaviour:
@@ -1114,7 +1114,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1337, y: -191}
+  m_AnchoredPosition: {x: -2592, y: -68.76}
   m_SizeDelta: {x: 637.65, y: 438.26}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &520463226
@@ -1323,8 +1323,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0050659, y: -71.01}
-  m_SizeDelta: {x: 1920, y: 1222.03}
+  m_AnchoredPosition: {x: -18.09, y: -34.33}
+  m_SizeDelta: {x: 2210.82, y: 1404.51}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1057789163
 MonoBehaviour:
@@ -1636,8 +1636,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 42
+  m_fontSizeBase: 42
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1720,8 +1720,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -60, y: 343.33}
-  m_SizeDelta: {x: 54, y: 54}
+  m_AnchoredPosition: {x: -67.845, y: 348}
+  m_SizeDelta: {x: 69.69, y: 71.93}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1461446626
 MonoBehaviour:
@@ -1743,7 +1743,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: baaeddbc8f8f6b1478dc01cd821cd549, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9435b8c345982b048a85ec6613f37adc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2258,9 +2258,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3fa3777a809ea0240ab53d7365a9a9f0, type: 3}
   - {fileID: 21300000, guid: 5f8cc222c65b37a4995cc5257577e6d0, type: 3}
   - {fileID: 21300000, guid: 1838f30d928a9b04c8fdc44d54989f2b, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &1900254528
 GameObject:
   m_ObjectHideFlags: 0
