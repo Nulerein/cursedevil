@@ -2203,6 +2203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1853272488}
   - component: {fileID: 1853272489}
+  - component: {fileID: 1853272490}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -2242,11 +2243,14 @@ MonoBehaviour:
   clickUpgradeText: {fileID: 169456916}
   autoClickUpgradeText: {fileID: 879907893}
   clickButton: {fileID: 457011304}
+  clickPopTarget: {fileID: 0}
   clickUpgradeButton: {fileID: 1309794238}
   autoClickUpgradeButton: {fileID: 268814863}
   doubleCoinsButton: {fileID: 291945679}
   adButton: {fileID: 1900254530}
   xpBar: {fileID: 1743596853}
+  doubleCoinsButtonText: {fileID: 0}
+  clickAnimator: {fileID: 1853272490}
   clickButtonSprites:
   - {fileID: 21300000, guid: 1e32e7b9e66c8fb4bb428ef8f53c310e, type: 3}
   - {fileID: 21300000, guid: 311d4ebf17dc1c84ebad05cba5a836cc, type: 3}
@@ -2258,6 +2262,24 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3fa3777a809ea0240ab53d7365a9a9f0, type: 3}
   - {fileID: 21300000, guid: 5f8cc222c65b37a4995cc5257577e6d0, type: 3}
   - {fileID: 21300000, guid: 1838f30d928a9b04c8fdc44d54989f2b, type: 3}
+--- !u!114 &1853272490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1853272487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2329e40fede214f4884e3095762b7961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasRect: {fileID: 457011303}
+  plusPrefab: {fileID: 1335497451}
+  rise: 60
+  duration: 0.8
+  randomOffset: {x: 10, y: 0}
+  renderCamera: {fileID: 519420031}
 --- !u!1 &1900254528
 GameObject:
   m_ObjectHideFlags: 0
